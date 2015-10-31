@@ -34,16 +34,18 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(zlib REQUIRED)
 
+add_definitions("-DSDL_MAIN_HANDLED")
+
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIR})
 link_libraries(${LIBS} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${ZLIB_LIBRARY})
 
 if(APPLE)
 link_libraries(objc)
 elseif(WIN32)
-link_libraries(winmm imm32 version)
+link_libraries(winmm imm32 version ole32 gdi32 oleaut32)
 endif()
 
-if(MINGW)
+if(MINGW OR MSYS)
 link_libraries(-mwindows)
 endif()
 
